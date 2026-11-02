@@ -1,0 +1,22 @@
+{
+  "name": "聚合影视·自建CMS源",
+  "url": "https://github.com/krypth/tvbox-cms-source",
+  "date": "2026-07-11",
+  "desc": "手工筛选的稳定CMS视频聚合源。\n\n【重要声明】\n本订阅源文件仅为视频资源索引配置，不存储任何视频内容。\n所有站点均为第三方公开CMS API，用户自行选择使用。\n使用本订阅源访问任何内容的行为及后果由用户自行承担。\n请在遵守当地法律法规的前提下使用。\n\n站点清单（13个）：暴风/IK/牛牛/索尼/量子/非凡/闪电/樱花/金鹰/百度/速博/无尽/最大",
+  "disclaimer": "本订阅源不提供、不存储任何视频内容。所有站点均为第三方来源，仅供技术学习参考。使用者须遵守所在地法律法规，自行承担使用风险。",
+  "sites": [
+    {"key": "bafeng", "name": "暴风", "type": 1, "api": "https://bfzyapi.com/api.php/provide/vod", "searchable": 1, "quickSearch": 1},
+    {"key": "ikun", "name": "IK", "type": 1, "api": "https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8/", "searchable": 1, "quickSearch": 1},
+    {"key": "niuniu", "name": "牛牛", "type": 1, "api": "https://api.niuniuzy.me/api.php/provide/vod", "searchable": 1, "quickSearch": 1},
+    {"key": "suoni", "name": "索尼", "type": 1, "api": "https://suoniapi.com/api.php/provide/vod", "searchable": 1, "quickSearch": 1},
+    {"key": "liangzi", "name": "量子", "type": 1, "api": "https://cj.lziapi.com/api.php/provide/vod/", "searchable": 1, "quickSearch": 1},
+    {"key": "feifan", "name": "非凡", "type": 1, "api": "http://cj.ffzyapi.com/api.php/provide/vod/", "searchable": 1, "quickSearch": 1},
+    {"key": "shandian", "name": "闪电", "type": 1, "api": "https://sdzyapi.com/api.php/provide/vod/", "searchable": 1, "quickSearch": 1},
+    {"key": "yinghua", "name": "樱花", "type": 1, "api": "https://m3u8.apiyhzy.com/api.php/provide/vod/", "searchable": 1, "quickSearch": 1},
+    {"key": "jinying", "name": "金鹰", "type": 1, "api": "http://jyzyapi.com/provide/vod/from/jinyingm3u8/", "searchable": 1, "quickSearch": 1},
+    {"key": "baidu", "name": "百度", "type": 1, "api": "https://api.apibdzy.com/api.php/provide/vod/", "searchable": 1, "quickSearch": 1},
+    {"key": "subo", "name": "速博", "type": 1, "api": "https://subocaiji.com/api.php/provide/vod/", "searchable": 1, "quickSearch": 1},
+    {"key": "wujin", "name": "无尽", "type": 1, "api": "https://api.wujinapi.com/api.php/provide/vod/", "searchable": 1, "quickSearch": 1},
+    {"key": "zuida", "name": "最大", "type": 1, "api": "http://zuidazy.me/api.php/provide/vod/", "searchable": 1, "quickSearch": 1}
+  ]
+}
