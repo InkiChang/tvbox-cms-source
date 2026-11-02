@@ -5,9 +5,10 @@
   1. ziyuanzu 资源组监测清单 status=ok 的源 — 主上游，自带健康度/评分
   2. krypth/tvbox-cms-source 的 source.json sites
   3. yujian0815/fnmedia-ext 的 providers.py DEFAULT_SOURCES（ast 解析）
+  4. zhang-wei-ye/bofangqi 的 lib/source_store.dart kDefaultSources（regex 解析）
 
 去重规则: API 域名相同 或 规范化名称相同（去"资源站/资源/采集站/影视"后缀）
-视为同一源，按 ziyuanzu > krypth > fnmedia 优先保留。
+视为同一源，按 ziyuanzu > krypth > fnmedia > bofangqi 优先保留。
 任一上游拉取失败则退出码 1 且不写 source.json（保留上一版可用订阅）。
 """
 from __future__ import annotations
@@ -23,6 +24,7 @@ from urllib.parse import urlparse
 ZIYUANZU_URL = "https://mylazily.github.io/ziyuanzhan/data/latest.json"
 KRYPTH_URL = "https://raw.githubusercontent.com/krypth/tvbox-cms-source/main/source.json"
 FNMEDIA_URL = "https://raw.githubusercontent.com/yujian0815/fnmedia-ext/main/proxy/providers.py"
+BOFANGQI_URL = "https://raw.githubusercontent.com/zhang-wei-ye/bofangqi/master/lib/source_store.dart"
 
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) tvbox-source-builder/1.0"}
 
@@ -103,10 +105,25 @@ def load_fnmedia() -> list[dict]:
     raise RuntimeError("DEFAULT_SOURCES not found in fnmedia providers.py")
 
 
+def load_bofangqi() -> list[dict]:
+    src = fetch(BOFANGQI_URL)
+    m = re.search(r"kDefaultSources\s*=\s*\[(.*?)\]", src, re.S)
+    if not m:
+        raise RuntimeError("kDefaultSources not found in bofangqi source_store.dart")
+    out = []
+    for name, api in re.findall(r"VideoSource\(\s*name:\s*'([^']*)'\s*,\s*api:\s*'([^']*)'", m.group(1)):
+        if api:
+            out.append({"origin": "bofangqi", "name": name.strip() or dom(api), "api": api.strip()})
+    if not out:
+        raise RuntimeError("no VideoSource entries parsed from bofangqi")
+    return out
+
+
 def main() -> int:
     z, ts = load_ziyuanzu()
     k = load_krypth()
     f = load_fnmedia()
+    b = load_bofangqi()
 
     if len(z) < 10:
         print(f"[abort] ziyuanzu ok-sources only {len(z)}, upstream data abnormal", file=sys.stderr)
@@ -142,14 +159,14 @@ def main() -> int:
             added += 1
         return added
 
-    az, ak, af = add(z), add(k), add(f)
+    az, ak, af, ab = add(z), add(k), add(f), add(b)
 
     doc = {
         "name": "InkiChang 聚合CMS订阅源",
         "date": datetime.now().strftime("%Y-%m-%d"),
         "desc": (
             f"自动聚合构建: ziyuanzu监测清单ok源 {az} 个 + krypth/tvbox-cms-source {ak} 个 "
-            f"+ fnmedia-ext {af} 个，域名/名称去重共 {len(sites)} 源。"
+            f"+ fnmedia-ext {af} 个 + bofangqi {ab} 个，域名/名称去重共 {len(sites)} 源。"
             f"上游监测时间: {ts}。每天自动重建。"
         ),
         "sites": sites,
@@ -158,8 +175,8 @@ def main() -> int:
         json.dump(doc, fp, ensure_ascii=False, indent=2)
         fp.write("\n")
 
-    print(f"upstream: ziyuanzu_ok={len(z)} krypth={len(k)} fnmedia={len(f)} (monitor ts={ts})")
-    print(f"merged: ziyuanzu+{az} krypth+{ak} fnmedia+{af} total={len(sites)}")
+    print(f"upstream: ziyuanzu_ok={len(z)} krypth={len(k)} fnmedia={len(f)} bofangqi={len(b)} (monitor ts={ts})")
+    print(f"merged: ziyuanzu+{az} krypth+{ak} fnmedia+{af} bofangqi+{ab} total={len(sites)}")
     return 0
 
 

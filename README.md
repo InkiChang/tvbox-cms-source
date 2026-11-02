@@ -17,6 +17,7 @@ TVBox / 影视仓 / FongMi 等播放器可用的 **CMS 采集源聚合订阅**�
    只取 `status=ok` 的源，按评分/今日更新量降序排列，自带健康度剔除（宕机自动出榜、恢复自动回榜）。
 2. **krypth/tvbox-cms-source**：手工筛选的稳定 CMS 源。
 3. **yujian0815/fnmedia-ext**：飞牛影视扩展内置的 `DEFAULT_SOURCES`。
+4. **zhang-wei-ye/bofangqi**：Flutter 播放器预置的 `kDefaultSources`（2026-10 实测筛选）。
 
 去重规则：API 域名相同 **或** 规范化名称相同（去「资源站/资源/采集站/影视」等后缀）视为同一源，优先保留 ziyuanzu 版本。仅保留苹果 CMS V10 标准接口（`provide/vod`）。
 
