@@ -1,7 +1,7 @@
 {
   "name": "InkiChang 聚合CMS订阅源",
-  "date": "2026-11-10",
-  "desc": "自动聚合构建: ziyuanzu监测清单ok源 52 个 + krypth/tvbox-cms-source 3 个 + fnmedia-ext 4 个 + bofangqi 2 个，域名/名称去重共 61 源。上游监测时间: 2026-11-10 14:44:03。每天自动重建。",
+  "date": "2026-11-11",
+  "desc": "自动聚合构建: ziyuanzu监测清单ok源 52 个 + krypth/tvbox-cms-source 3 个 + fnmedia-ext 4 个 + bofangqi 2 个，域名/名称去重共 61 源。上游监测时间: 2026-11-11 13:59:12。每天自动重建。",
   "sites": [
     {
       "key": "jipinvip1_com",
